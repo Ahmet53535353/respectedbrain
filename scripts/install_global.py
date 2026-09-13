@@ -23,6 +23,8 @@ def _configure_console_output() -> None:
 _configure_console_output()
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+REPO = SCRIPT_DIR.parent
+TEMPLATE = REPO / "template"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 

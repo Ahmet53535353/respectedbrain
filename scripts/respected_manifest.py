@@ -20,8 +20,6 @@ GENERATED = (
     ".cursor/rules/beyin.mdc",
     ".agents/hooks.json",
     ".agents/rules/beyin.md",
-    ".opencode/plugins/respected-brain.ts",
-    ".opencode/agents/beyin.md",
 )
 
 RUNTIME = (
@@ -55,6 +53,8 @@ RUNTIME = (
     "📋 Templates/Base.base",
     "📋 Templates/Canvas.canvas",
     ".obsidian/snippets/secondbrain-layout.css",
+    ".opencode/plugins/respected-brain.ts",
+    ".opencode/agents/beyin.md",
     "scripts/render_integrations.py",
     "scripts/legacy_names.py",
     "scripts/install_antigravity_global.py",

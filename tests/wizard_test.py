@@ -115,7 +115,7 @@ class WizardTest(unittest.TestCase):
         self.assertEqual(config_data.get("summary_provider"), "auto")
         self.assertEqual(
             config_data.get("provider_priority"),
-            ["antigravity", "codex", "claude", "cursor"],
+            ["antigravity", "codex", "claude", "cursor", "opencode"],
         )
         self.assertEqual(config_data.get("environment"), "native")
 

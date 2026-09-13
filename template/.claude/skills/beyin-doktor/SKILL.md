@@ -56,7 +56,7 @@ Düzeltme: dosyanın shebang'inden hemen sonraki satıra `[ -n "${BEYIN_INVOKED_
 ### 4. python3 ve en az bir model CLI yolda mı
 
 ```bash
-if command -v python3 >/dev/null 2>&1; then echo "python3: $(python3 -V 2>&1)"; else echo "python3: YOK"; fi; n=0; for c in claude codex agy cursor-agent; do if command -v "$c" >/dev/null 2>&1; then echo "$c: var"; n=$((n+1)); else echo "$c: yok"; fi; done; echo "model_cli_sayisi: $n"; if [ -f .beyin/config.json ]; then echo "provider_ayari: $(python3 -c 'import json; print(json.load(open(".beyin/config.json")).get("summary_provider", "auto"))' 2>/dev/null || echo bozuk)"; else echo "provider_ayari: YOK"; fi
+if command -v python3 >/dev/null 2>&1; then echo "python3: $(python3 -V 2>&1)"; else echo "python3: YOK"; fi; n=0; for c in claude codex agy cursor-agent opencode; do if command -v "$c" >/dev/null 2>&1; then echo "$c: var"; n=$((n+1)); else echo "$c: yok"; fi; done; echo "model_cli_sayisi: $n"; if [ -f .beyin/config.json ]; then echo "provider_ayari: $(python3 -c 'import json; print(json.load(open(".beyin/config.json")).get("summary_provider", "auto"))' 2>/dev/null || echo bozuk)"; else echo "provider_ayari: YOK"; fi
 ```
 
 🟢 python3 ve en az bir model CLI var. 🔴 python3 yoksa flush ve derleme çalışmaz; model CLI
@@ -239,6 +239,20 @@ python3 .beyin/graph_analysis.py . --json 2>/dev/null || py -3 .beyin/graph_anal
 🟡 Kırık linkler var veya kopuk adalar (yetim sayfalar) tespit edildi.
 🔴 İsim çakışması (duplicate stems) var veya graf bütünlüğü bozulmuş.
 Düzeltme: Raporlanan kırık linkleri düzelt, çakışan aynı isimli sayfaları birleştir.
+
+### 20. OpenCode plugin ve agent kurulumu
+
+```bash
+# Plugin var mı?
+if [ -f ~/.config/opencode/plugins/respected-brain.ts ]; then echo "plugin: var"; else echo "plugin: YOK"; fi
+# Agent var mı ve frontmatter doğru mu?
+if [ -f ~/.config/opencode/agents/beyin.md ]; then head -5 ~/.config/opencode/agents/beyin.md | grep -q "mode: primary" && echo "agent: ok (frontmatter var)" || echo "agent: VAR ama frontmatter EKSIK"; else echo "agent: YOK"; fi
+# Skills kopyalanış mı?
+ls ~/.config/opencode/skills/ 2>/dev/null | wc -l
+```
+
+🟢 Plugin ve agent kurulu, frontmatter `mode: primary` ile doğru. 🔴 OpenCode bağlantısı eksik.
+Düzeltme: `scripts/install_global.py --providers opencode --apply` çalıştır.
 
 ## Düzeltme planı sözleşmesi
 

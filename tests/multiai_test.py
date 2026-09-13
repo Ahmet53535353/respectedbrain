@@ -330,12 +330,12 @@ class MultiAITest(unittest.TestCase):
         with mock.patch.object(runner, "_configured_provider", return_value="auto"):
             self.assertEqual(
                 runner._available("antigravity"),
-                ["antigravity", "claude", "codex", "cursor"],
+                ["antigravity", "claude", "codex", "cursor", "opencode"],
             )
         with mock.patch.object(runner, "_configured_provider", return_value="cursor"):
             self.assertEqual(
                 runner._available("antigravity"),
-                ["cursor", "antigravity", "claude", "codex"],
+                ["cursor", "antigravity", "claude", "codex", "opencode"],
             )
 
     def test_wsl_windows_cli_receives_translatable_profile_environment(self):
