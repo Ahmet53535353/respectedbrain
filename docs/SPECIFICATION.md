@@ -51,6 +51,7 @@ Bu dosyalar elle düzenlenmez; `scripts/render_integrations.py` tarafından üre
 - `.beyin/skills`
 - `.claude/skills`
 - `.agents/skills`
+- `.opencode/skills`
 
 #### D. Yalnızca Repo Araçları (`REPO_ONLY_SCRIPTS`)
 - `install-windows.ps1`
@@ -65,11 +66,12 @@ Bu dosyalar elle düzenlenmez; `scripts/render_integrations.py` tarafından üre
 
 | Değer | Davranış | Fallback Sırası |
 | --- | --- | --- |
-| `auto` (Varsayılan) | Hook'u tetikleyen agent'ın CLI'ını ilk sıraya alır. | `agy` → `codex exec` → `cursor-agent -p` → `claude -p` |
+| `auto` (Varsayılan) | Hook'u tetikleyen agent'ın CLI'ını ilk sıraya alır. | `agy` → `codex exec` → `cursor-agent -p` → `claude -p` → `opencode` |
 | `antigravity` | İlk olarak Google Antigravity CLI (`agy`) denenir. | Kurulu ve giriş yapılmış diğer CLI'lar. |
 | `codex` | İlk olarak OpenAI Codex CLI (`codex exec`) denenir. | Kurulu ve giriş yapılmış diğer CLI'lar. |
 | `cursor` | İlk olarak Cursor CLI (`cursor-agent -p`) denenir. | Kurulu ve giriş yapılmış diğer CLI'lar. |
 | `claude` | İlk olarak Claude Code CLI (`claude -p`) denenir. | Kurulu ve giriş yapılmış diğer CLI'lar. |
+| `opencode` | İlk olarak OpenCode CLI (`opencode`) denenir. | Kurulu ve giriş yapılmış diğer CLI'lar. |
 
 ### Hata Yönetimi Kuralları
 - **Geçici Hatalar:** CLI bulunamaması, zaman aşımı (timeout), HTTP 429 / kota tükenmesi, geçici 502/503/504 sunucu hatalarında süreç sonlandırılmaz; bir sonraki uygun sağlayıcıya geçilir.

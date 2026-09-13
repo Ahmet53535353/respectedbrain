@@ -22,7 +22,7 @@ import runtime_platform
 
 
 Mode = Literal["text", "workspace"]
-PROVIDERS = ("claude", "codex", "antigravity", "cursor")
+PROVIDERS = ("claude", "codex", "antigravity", "cursor", "opencode")
 
 
 @dataclass(frozen=True)
@@ -154,6 +154,11 @@ def _command(provider: str, prompt: str, mode: Mode) -> Invocation | None:
             argv.append("--force")
         argv.append(prompt)
         return Invocation(argv, None, _windows_executable(executable))
+    if provider == "opencode":
+        executable = shutil.which("opencode") or shutil.which("opencode.exe")
+        if executable is None:
+            return None
+        return Invocation([executable, "run", prompt], None, _windows_executable(executable))
     return None
 
 

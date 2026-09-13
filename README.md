@@ -8,7 +8,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License"></a>
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB.svg?style=flat-square&logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux%20%7C%20WSL-lightgrey.svg?style=flat-square" alt="Platforms">
-  <img src="https://img.shields.io/badge/Tested%20Agents-Antigravity%20%7C%20Codex%20%7C%20Claude%20%7C%20Cursor%20%7C%20Windsurf-purple.svg?style=flat-square" alt="Tested Agents">
+  <img src="https://img.shields.io/badge/Tested%20Agents-Antigravity%20%7C%20Codex%20%7C%20Claude%20%7C%20Cursor%20%7C%20Windsurf%20%7C%20OpenCode-purple.svg?style=flat-square" alt="Tested Agents">
   <img src="https://img.shields.io/badge/MCP-Supported%20FTS5-teal.svg?style=flat-square" alt="MCP Server">
   <img src="https://img.shields.io/badge/Architecture-Zero--Trust%20Local%20Memory-orange.svg?style=flat-square" alt="Local Memory">
 </p>
@@ -25,7 +25,7 @@ Antigravity rules/hook dosyaları buradan üretilir. Ayrıntılar için [MULTI_A
 dosyasına bak.
 
 Vault'un adı kullanıcıya aittir; `respectedOS` veya başka sabit bir ad zorunlu değildir. İsteğe bağlı
-global kurulum, seçilen vault'u Claude, Codex, Cursor ve Antigravity'ye kullanıcı düzeyinde
+global kurulum, seçilen vault'u Claude, Codex, Cursor, Antigravity ve OpenCode'ye kullanıcı düzeyinde
 bağlayarak başka kod repolarında da aynı merkezi hafızayı kullanır.
 
 ## Kısaca nasıl çalışır?
@@ -41,6 +41,7 @@ graph TD
         CLD["Claude Code"]
         CUR["Cursor IDE"]
         WND["Windsurf / Cline"]
+        OPCODE["OpenCode"]
     end
 
     subgraph Hooks ["⚡ Yaşam Döngüsü Kancaları (Lifecycle Hooks)"]
@@ -63,10 +64,10 @@ graph TD
         OBS["Obsidian Kasa Arayüzü<br/>(Yerel Markdown Görselleştirme)"]
     end
 
-    AGY & CDX & CLD & CUR & WND -->|Oturum Başlar| H_START
-    AGY & CDX & CLD & CUR & WND -->|Kullanıcı Mesajı| H_PROMPT
+    AGY & CDX & CLD & CUR & WND & OPCODE -->|Oturum Başlar| H_START
+    AGY & CDX & CLD & CUR & WND & OPCODE -->|Kullanıcı Mesajı| H_PROMPT
     CDX & CLD & CUR -->|Bağlam Taşmak Üzere| H_COMPACT
-    AGY & CDX & CLD & CUR & WND -->|Oturum Biter| H_END
+    AGY & CDX & CLD & CUR & WND & OPCODE -->|Oturum Biter| H_END
 
     H_COMPACT & H_END --> FLUSH
     FLUSH --> DAILY
@@ -237,7 +238,7 @@ py -3 scripts/install_global.py `
   "C:\Users\KULLANICI\Documents\BenimBeynim" `
   --home "C:\Users\KULLANICI" `
   --platform windows-native `
-  --providers codex,cursor
+  --providers codex,cursor,opencode
 ```
 
 macOS/Linux örneği:
@@ -466,6 +467,7 @@ dosyalarını kendi eliyle günceller. Makine katmanı onun yerine geçmez, alt�
 | Codex | `AGENTS.md` | `.agents/skills/` | başlangıç, prompt, kapanış, pre-compact | `codex exec` |
 | Cursor | `.cursor/rules/beyin.mdc` + `AGENTS.md` | `.agents/skills/` | başlangıç, prompt, kapanış, pre-compact | `cursor-agent -p` |
 | Claude Code | `CLAUDE.md` | `.claude/skills/` | başlangıç, prompt, kapanış, pre-compact | `claude -p` |
+| OpenCode | `.opencode/agents/beyin.md` | `.opencode/skills/` | plugin (chat.message, event) | `opencode` |
 
 Talimat ve skill içerikleri `.beyin/` altındaki tek kaynaktan üretilir; yani dört ayrı kopyayı
 elle güncellemezsin. Dosya adları ve kanca olayları agentların kendi formatları farklı olduğu için

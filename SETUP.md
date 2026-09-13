@@ -40,7 +40,7 @@ Claude is never mandatory when another selected provider CLI is installed and au
    go: "Vault iskeletini kuruyorum...", "Hafıza motorunu bağlıyorum...", "Derleyiciyi yerine
    koyuyorum...". Short sentences, no walls of text.
 7. **No extra API key is required.** The background summarizer and compiler use an authenticated
-   local CLI (`claude`, `codex`, `agy`, or `cursor-agent`) and consume that provider's existing
+    local CLI (`claude`, `codex`, `agy`, `cursor-agent`, `opencode`) and consume that provider's existing
    subscription/quota.
 8. **Do not force one provider.** Default the summary provider to `auto`. Only persist a specific
    provider when the user explicitly asks. Switching the coding agent must not require migration.
@@ -199,14 +199,14 @@ else
   BEYIN_MISSING=$((BEYIN_MISSING + 1))
 fi
 BEYIN_CLI_COUNT=0
-for BEYIN_CLI in claude codex agy cursor-agent; do
+for BEYIN_CLI in claude codex agy cursor-agent opencode; do
   if command -v "$BEYIN_CLI" >/dev/null 2>&1; then
     echo "$BEYIN_CLI CLI ✓ $(command -v "$BEYIN_CLI")"
     BEYIN_CLI_COUNT=$((BEYIN_CLI_COUNT + 1))
   fi
 done
 if [ "$BEYIN_CLI_COUNT" -eq 0 ]; then
-  echo "🔴 DESTEKLENEN AI CLI YOK: claude | codex | agy | cursor-agent"
+  echo "🔴 DESTEKLENEN AI CLI YOK: claude | codex | agy | cursor-agent | opencode"
   BEYIN_MISSING=$((BEYIN_MISSING + 1))
 fi
 echo "ONKOSUL SONUC: $BEYIN_MISSING eksik"

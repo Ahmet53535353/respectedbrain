@@ -235,11 +235,6 @@ salt okunur denetle. Brifing yoksa bunun zamanlayıcı eksikliği mi model hatas
 python3 .beyin/graph_analysis.py . --json 2>/dev/null || py -3 .beyin/graph_analysis.py . --json
 ```
 
-🟢 Kırık link sayısı 0, kritik yetim sayfa oranı <%5.
-🟡 Kırık linkler var veya kopuk adalar (yetim sayfalar) tespit edildi.
-🔴 İsim çakışması (duplicate stems) var veya graf bütünlüğü bozulmuş.
-Düzeltme: Raporlanan kırık linkleri düzelt, çakışan aynı isimli sayfaları birleştir.
-
 ### 20. OpenCode plugin ve agent kurulumu
 
 ```bash
@@ -251,8 +246,10 @@ if [ -f ~/.config/opencode/agents/beyin.md ]; then head -5 ~/.config/opencode/ag
 ls ~/.config/opencode/skills/ 2>/dev/null | wc -l
 ```
 
-🟢 Plugin ve agent kurulu, frontmatter `mode: primary` ile doğru. 🔴 OpenCode bağlantısı eksik.
-Düzeltme: `scripts/install_global.py --providers opencode --apply` çalıştır.
+🟢 Kırık link sayısı 0, kritik yetim sayfa oranı <%5.
+🟡 Kırık linkler var veya kopuk adalar (yetim sayfalar) tespit edildi.
+🔴 İsim çakışması (duplicate stems) var veya graf bütünlüğü bozulmuş.
+Düzeltme: Raporlanan kırık linkleri düzelt, çakışan aynı isimli sayfaları birleştir.
 
 ## Düzeltme planı sözleşmesi
 

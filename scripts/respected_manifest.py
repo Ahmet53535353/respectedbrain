@@ -20,6 +20,8 @@ GENERATED = (
     ".cursor/rules/beyin.mdc",
     ".agents/hooks.json",
     ".agents/rules/beyin.md",
+    ".opencode/plugins/respected-brain.ts",
+    ".opencode/agents/beyin.md",
 )
 
 RUNTIME = (
@@ -73,7 +75,7 @@ RUNTIME = (
     "scripts/tiling_check.py",
 )
 
-SKILL_DESTINATIONS = (".beyin/skills", ".claude/skills", ".agents/skills")
+SKILL_DESTINATIONS = (".beyin/skills", ".claude/skills", ".agents/skills", ".opencode/skills")
 REPO_ONLY_SCRIPTS = (
     "install-windows.ps1",
     "enable_multiai.py",

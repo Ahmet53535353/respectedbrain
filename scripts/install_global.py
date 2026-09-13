@@ -44,7 +44,7 @@ BEGIN = "<!-- RESPECTED-GLOBAL:BEGIN -->"
 END = "<!-- RESPECTED-GLOBAL:END -->"
 HOOK_NAME = "respected-brain"
 CURSOR_RULE = HOOK_NAME + ".mdc"
-SUPPORTED = ("antigravity", "codex", "cursor", "claude")
+SUPPORTED = ("antigravity", "codex", "cursor", "claude", "opencode")
 
 
 def write_text(path: Path, content: str) -> None:
@@ -302,6 +302,21 @@ def build(vault: Path, home: Path, providers: tuple[str, ...], platform: str) ->
         writes += copy_skills(vault, [config / "skills"])
         touched += [settings_path, rule_path]
 
+    if "opencode" in providers:
+        plugins_dir = home / ".config" / "opencode" / "plugins"
+        agents_dir = home / ".config" / "opencode" / "agents"
+        skills_dir = home / ".config" / "opencode" / "skills"
+        src_plugin = TEMPLATE / ".opencode" / "plugins" / "respected-brain.ts"
+        src_agent = TEMPLATE / ".opencode" / "agents" / "beyin.md"
+        if src_plugin.is_file():
+            writes.append((plugins_dir / "respected-brain.ts", src_plugin.read_text(encoding="utf-8")))
+            touched.append(plugins_dir / "respected-brain.ts")
+        if src_agent.is_file():
+            writes.append((agents_dir / "beyin.md", src_agent.read_text(encoding="utf-8")))
+            touched.append(agents_dir / "beyin.md")
+        writes += copy_skills(vault, [skills_dir])
+        touched.append(skills_dir)
+
     return writes, touched
 
 
@@ -408,7 +423,7 @@ def main() -> int:
             "ortak .agents/skills kopyası da buraya yazılır; birden fazla verilebilir"
         ),
     )
-    parser.add_argument("--providers", default="all", help="all veya virgülle: antigravity,codex,cursor,claude")
+    parser.add_argument("--providers", default="all", help="all veya virgülle: antigravity,codex,cursor,claude,opencode")
     parser.add_argument("--platform", choices=tuple(DEFAULT_PYTHON_COMMANDS), default="portable")
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()

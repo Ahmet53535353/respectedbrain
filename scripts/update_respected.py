@@ -47,7 +47,7 @@ def _configure_console_output() -> None:
 
 
 _configure_console_output()
-SUMMARY_PROVIDERS = {"auto", "claude", "codex", "cursor", "antigravity"}
+SUMMARY_PROVIDERS = {"auto", "claude", "codex", "cursor", "antigravity", "opencode"}
 CURRENT_TOOL_FILES = ("scripts/update_respected.py", "scripts/respected_manifest.py")
 LEGACY_TOOL_FILES = (LEGACY_UPDATE_SCRIPT, LEGACY_MANIFEST_SCRIPT)
 LEGACY_ENGINE_FILES = (".claude/scripts/flush.py", ".claude/scripts/compile.py")

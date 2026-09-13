@@ -19,12 +19,13 @@ REPO_ROOT = Path(__file__).resolve().parent
 TEMPLATE_DIR = REPO_ROOT / "template"
 SCRIPTS_DIR = REPO_ROOT / "scripts"
 
-SUPPORTED_PROVIDERS = ("antigravity", "codex", "claude", "cursor")
+SUPPORTED_PROVIDERS = ("antigravity", "codex", "claude", "cursor", "opencode")
 PROVIDER_COMMANDS = {
     "antigravity": "agy",
     "codex": "codex",
     "claude": "claude",
     "cursor": "cursor-agent",
+    "opencode": "opencode",
 }
 
 
@@ -461,18 +462,18 @@ def _interactive_wizard() -> int:
 
     if choice == "1":
         summary_provider = "auto"
-        provider_priority = ["claude", "codex", "antigravity", "cursor"]
+        provider_priority = ["claude", "codex", "antigravity", "cursor", "opencode"]
     elif choice == "2":
         summary_provider = "auto"
-        provider_priority = ["antigravity", "codex", "claude", "cursor"]
+        provider_priority = ["antigravity", "codex", "claude", "cursor", "opencode"]
     elif choice == "3":
         summary_provider = "auto"
-        provider_priority = ["codex", "claude", "antigravity", "cursor"]
+        provider_priority = ["codex", "claude", "antigravity", "cursor", "opencode"]
     elif choice == "4":
         summary_provider = "auto"
-        provider_priority = ["claude", "codex", "antigravity", "cursor"]
+        provider_priority = ["claude", "codex", "antigravity", "cursor", "opencode"]
     elif choice == "5":
-        print("  Hangi modeli kilitlemek istiyorsunuz? (antigravity / codex / claude / cursor)")
+        print("  Hangi modeli kilitlemek istiyorsunuz? (antigravity / codex / claude / cursor / opencode)")
         locked = _prompt_user("Model", "antigravity").lower()
         if locked in SUPPORTED_PROVIDERS:
             summary_provider = locked
@@ -480,7 +481,7 @@ def _interactive_wizard() -> int:
         else:
             summary_provider = "auto"
     elif choice == "6":
-        custom_input = _prompt_user("Sıralamayı virgülle girin (örn: antigravity, codex)", "antigravity, codex")
+        custom_input = _prompt_user("Sıralamayı virgülle girin (örn: antigravity, codex)", "antigravity, codex, opencode")
         items = [p.strip().lower() for p in custom_input.split(",") if p.strip()]
         valid = [p for p in items if p in SUPPORTED_PROVIDERS]
         if valid:

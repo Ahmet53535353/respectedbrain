@@ -3,7 +3,7 @@
 Durum: **Yetkili Mimari Kılavuz (Golden Standard)**<br>
 Kaynak: `https://github.com/respected0/respectedbrain`
 
-Respected Brain; Antigravity, Codex, Cursor ve Claude Code araçlarını yerel bir Obsidian Markdown vault'u etrafında birleştiren, bağımsız ve provider-neutral bir yapay zeka hafıza katmanıdır. Herhangi bir harici cloud bağımlılığı, merkezi veritabanı veya ek API anahtarı gerektirmez.
+Respected Brain; Antigravity, Codex, Cursor, Claude Code ve OpenCode araçlarını yerel bir Obsidian Markdown vault'u etrafında birleştiren, bağımsız ve provider-neutral bir yapay zeka hafıza katmanıdır. Herhangi bir harici cloud bağımlılığı, merkezi veritabanı veya ek API anahtarı gerektirmez.
 
 ---
 
@@ -14,7 +14,7 @@ Farklı yapay zeka araçlarıyla çalışırken en büyük problem **bağlam kop
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │                 Coding & Research Agentları                 │
-│      Antigravity    •    Codex    •    Cursor    •   Claude     │
+│      Antigravity    •    Codex    •    Cursor    •   Claude  •  OpenCode     │
 └──────────────┬───────────────────────────────▲──────────────┘
                │ (PreInvocation / Stop)        │ (SessionStart)
                ▼                               │
@@ -44,7 +44,7 @@ Farklı yapay zeka araçlarıyla çalışırken en büyük problem **bağlam kop
 
 1. **Tek Doğruluk Kaynağı (SSOT):** Tüm kurallar ve çalışma talimatları `template/.beyin/instructions.md` dosyasında, yetenekler ise `template/.beyin/skills/` altında tutulur. Agent yapılandırmaları bu kaynaktan otomatik üretilir.
 2. **Sağlayıcı Bağımsızlığı (Provider-Neutral):** Kodlama yaptığınız agent (örn. Antigravity) ile arka planda hafıza özetini çıkaran CLI (örn. Codex) birbirinden bağımsızdır.
-3. **Sıfır Ek Maliyet & Ek Anahtar Yok:** Sistem kendi başına ücretli bir API anahtarı istemez; geliştiricinin makinesinde kurulu ve oturum açmış yerel CLI araçlarının (`agy`, `codex`, `cursor-agent`, `claude`) mevcut oturumlarını kullanır.
+3. **Sıfır Ek Maliyet & Ek Anahtar Yok:** Sistem kendi başına ücretli bir API anahtarı istemez; geliştiricinin makinesinde kurulu ve oturum açmış yerel CLI araçlarının (`agy`, `codex`, `cursor-agent`, `claude`, `opencode`) mevcut oturumlarını kullanır.
 4. **Dayanıklı Fallback Mimarisi:** Oturumu kapatan agent'ın CLI'ı yanıt vermezse, kota aşımı (429) veya servis hatası (502/503/504) verirse, sistem otomatik olarak kurulu diğer hazır CLI'a geçer.
 5. **Yerel Dosya Bütünlüğü & Geri Alınabilirlik:** Tüm veriler standart Markdown dosyalarıdır. Veri kaybına karşı otomatik Git snapshot'ları ve Restic desteği bulunur.
 6. **Güvenli Sınırlar (Zero-Trust):** Transkript ve günlük metinleri potansiyel olarak düşmanca (untrusted) kabul edilir. Derleme izole staging dizininde yapılır; model komutları shell injection riskine karşı her zaman doğrudan argüman dizileri (`argv`) ile çalıştırılır.
@@ -196,7 +196,7 @@ Her sabah 08:00'de zamanlayıcı (Windows Task Scheduler, systemd timer veya Lau
                      │                            │
                      ▼                            ▼
             [Fallback Zinciri: Diğer Hazır CLI'lar]
-            (agy -> codex -> cursor-agent -> claude)
+            (agy -> codex -> cursor-agent -> claude -> opencode)
 ```
 
 ---

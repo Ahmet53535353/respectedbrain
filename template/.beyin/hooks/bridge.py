@@ -172,6 +172,16 @@ def output(provider: str, event: str, context: str) -> None:
             print(json.dumps({"injectSteps": steps}, ensure_ascii=False))
         else:
             print(json.dumps({"decision": "stop"}, ensure_ascii=False))
+    elif provider == "opencode":
+        if event == "start":
+            print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": context}}, ensure_ascii=False))
+        elif event == "prompt":
+            print(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": context}}, ensure_ascii=False))
+        elif context:
+            event_name = {"start": "SessionStart", "prompt": "UserPromptSubmit", "end": "SessionEnd", "precompact": "PreCompact", "postcompact": "PostCompact"}[event]
+            print(json.dumps({"hookSpecificOutput": {"hookEventName": event_name, "additionalContext": context}}, ensure_ascii=False))
+        else:
+            print("{}")
     elif context:
         event_name = {"start": "SessionStart", "prompt": "UserPromptSubmit", "end": "SessionEnd", "precompact": "PreCompact", "postcompact": "PostCompact"}[event]
         print(json.dumps({"hookSpecificOutput": {"hookEventName": event_name, "additionalContext": context}}, ensure_ascii=False))
@@ -212,7 +222,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if LIFECYCLE._is_reentrant():
         return 0
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--provider", choices=("claude", "codex", "cursor", "antigravity"), required=True)
+    parser.add_argument("--provider", choices=("claude", "codex", "cursor", "antigravity", "opencode"), required=True)
     parser.add_argument("--event", choices=EVENTS, required=True)
     parser.add_argument("--global-hook", action="store_true", help="vault dışındaki repolar için kullanıcı düzeyi hook")
     args = parser.parse_args(argv)

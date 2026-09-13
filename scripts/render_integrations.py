@@ -72,6 +72,7 @@ def sync_skills(check: bool) -> bool:
     for destination_root in (
         TEMPLATE / ".claude" / "skills",
         TEMPLATE / ".agents" / "skills",
+        TEMPLATE / ".opencode" / "skills",
     ):
         for source_file in sorted((SOURCE / "skills").glob("*/SKILL.md")):
             destination = destination_root / source_file.parent.name / "SKILL.md"
@@ -266,6 +267,14 @@ def render(check: bool, profile: Profile) -> bool:
         }
     }
     changed |= write_json(TEMPLATE / ".agents" / "hooks.json", antigravity_hooks, check)
+
+    opencode_plugin = TEMPLATE / ".opencode" / "plugins" / "respected-brain.ts"
+    opencode_agent = TEMPLATE / ".opencode" / "agents" / "beyin.md"
+    if opencode_plugin.is_file():
+        changed |= write_text(opencode_plugin, opencode_plugin.read_text(encoding="utf-8"), check)
+    if opencode_agent.is_file():
+        changed |= write_text(opencode_agent, opencode_agent.read_text(encoding="utf-8"), check)
+
     return changed
 
 
