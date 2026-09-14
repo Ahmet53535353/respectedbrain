@@ -10,10 +10,34 @@
 
 import { spawnSync } from "child_process"
 import { join, dirname } from "path"
-import { existsSync } from "fs"
+import { existsSync, readFileSync } from "fs"
+import { homedir } from "os"
 
 const PLUGIN_ID = "respected-brain"
 const MARKERS = [".respectedbrain-version", ".beyin-version"] as const
+
+function isVault(dir: string): boolean {
+  if (!dir) return false
+  for (const m of MARKERS) {
+    if (existsSync(join(dir, m))) return true
+  }
+  return existsSync(join(dir, ".beyin", "hooks", "bridge.py"))
+}
+
+// Global kurulumda vault disinda calisirken kasa yolunu okumak icin
+// kullanici duzeyi pointer dosyasi (install_global.py yazar).
+function pointerVault(): string | null {
+  try {
+    const file = join(homedir(), ".config", "opencode", "respected-brain.json")
+    if (!existsSync(file)) return null
+    const data = JSON.parse(readFileSync(file, "utf-8"))
+    const vault = typeof data?.vault === "string" ? data.vault.trim() : ""
+    if (!vault) return null
+    return isVault(vault) ? vault : null
+  } catch {
+    return null
+  }
+}
 
 const pendingStart = new Map<string, string>()
 const startInjected = new Set<string>()
@@ -22,15 +46,13 @@ const pendingNudge = new Map<string, string>()
 function findVault(start: string): string | null {
   let dir = start
   for (let i = 0; i < 12; i++) {
-    for (const m of MARKERS) {
-      if (existsSync(join(dir, m))) return dir
-    }
-    if (existsSync(join(dir, ".beyin", "hooks", "bridge.py"))) return dir
+    if (isVault(dir)) return dir
     const parent = dirname(dir)
     if (parent === dir) break
     dir = parent
   }
-  return null
+  // vault agaci icinde degiliz: global kurulum pointer'ina dus
+  return pointerVault()
 }
 
 function pyArgv(): string[] {
