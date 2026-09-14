@@ -308,8 +308,10 @@ def build(vault: Path, home: Path, providers: tuple[str, ...], platform: str) ->
         plugins_dir = home / ".config" / "opencode" / "plugins"
         agents_dir = home / ".config" / "opencode" / "agents"
         skills_dir = home / ".config" / "opencode" / "skills"
-        src_plugin = TEMPLATE / ".opencode" / "plugins" / "respected-brain.ts"
-        src_agent = TEMPLATE / ".opencode" / "agents" / "beyin.md"
+        config_dir = home / ".config" / "opencode"
+        # Kaynak kasadaki cozulmus hali: plugin placeholdersiz, agent placeholder'lari cozulmus
+        src_plugin = vault / ".opencode" / "plugins" / "respected-brain.ts"
+        src_agent = vault / ".opencode" / "agents" / "beyin.md"
         if src_plugin.is_file():
             writes.append((plugins_dir / "respected-brain.ts", src_plugin.read_text(encoding="utf-8")))
             touched.append(plugins_dir / "respected-brain.ts")
@@ -318,6 +320,15 @@ def build(vault: Path, home: Path, providers: tuple[str, ...], platform: str) ->
             touched.append(agents_dir / "beyin.md")
         writes += copy_skills(vault, [skills_dir])
         touched.append(skills_dir)
+        # Vault pointer: plugin cwd-disi repolarda kasa yolunu buradan okur
+        pointer = {"vault": str(vault), "provider": "opencode"}
+        writes.append(
+            (
+                config_dir / "respected-brain.json",
+                json.dumps(pointer, ensure_ascii=False, indent=2) + "\n",
+            )
+        )
+        touched.append(config_dir / "respected-brain.json")
 
     return writes, touched
 
