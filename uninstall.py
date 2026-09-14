@@ -273,6 +273,10 @@ def remove_global_integrations(clean_wsl: bool | None = None) -> list[str]:
         opencode_agent.unlink(missing_ok=True)
         cleaned.append(f"OpenCode agent silindi: {opencode_agent}")
     cleaned.extend(_clean_skills_from([opencode_root / "skills"], "OpenCode"))
+    opencode_pointer = opencode_root / "respected-brain.json"
+    if opencode_pointer.is_file():
+        opencode_pointer.unlink(missing_ok=True)
+        cleaned.append(f"OpenCode vault pointer silindi: {opencode_pointer}")
 
     if clean_wsl is None:
         clean_wsl = os.name == "nt" and "respected-uninstall-test" not in str(home) and home.exists()
