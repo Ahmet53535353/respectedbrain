@@ -272,7 +272,7 @@ def render(check: bool, profile: Profile) -> bool:
     opencode_agent_header = (
         "---\n"
         "description: Respected Brain ortak hafıza ve çalışma kuralları\n"
-        "mode: primary\n"
+        "mode: subagent\n"
         "---\n\n"
     )
     changed |= write_text(

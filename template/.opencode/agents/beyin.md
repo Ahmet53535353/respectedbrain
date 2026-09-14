@@ -1,6 +1,6 @@
 ---
 description: Respected Brain ortak hafıza ve çalışma kuralları
-mode: primary
+mode: subagent
 ---
 
 <!-- GENERATED: edit .beyin/instructions.md, then run scripts/render_integrations.py -->
